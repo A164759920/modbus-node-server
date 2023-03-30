@@ -7,9 +7,18 @@ const {
   writeModBusController,
 } = require("../controller/serialController.js");
 
+const {
+  getDeviceController,
+  getDataStreamController,
+  getImageStateController,
+} = require("../controller/monitorController.js");
 router.post("/connect", connectController);
 router.post("/read", readModBusController);
 router.post("/write", writeModBusController);
+
+router.get("/mqtt/getDevice", getDeviceController);
+router.get("/mqtt/getDataStream", getDataStreamController);
+router.get("/mqtt/getImageState", getImageStateController);
 
 module.exports = {
   router,
