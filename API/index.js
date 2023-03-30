@@ -5,7 +5,7 @@ const accessToken =
 
 /**
  * @description 根据设备名称获取设备信息
- * @param {String} deviceName
+ * @param {String} deviceName 设备名称
  * @returns {Object}
  */
 async function getDeviceByName(deviceName) {
@@ -29,7 +29,7 @@ async function getDeviceByName(deviceName) {
 }
 /**
  * @description  获取传感器数据流
- * @param {String} id
+ * @param {String} id 设备ID
  */
 async function getDataStreamByID(id) {
   try {
@@ -65,8 +65,8 @@ async function getDataStreamByID(id) {
   }
 }
 /**
- * @description 根据ID获取设备镜像state
- * @param {String} id
+ * @description 根据ID获取设备镜像state 【reported字段】
+ * @param {String} id 设备ID
  */
 async function getImageStateByID(id) {
   try {
@@ -98,16 +98,26 @@ async function getImageStateByID(id) {
 }
 
 /**
- * @description 更新设备镜像state
- * @param {Object} stateData
+ * @description 更新设备镜像state 【desired字段】
+ * @param {String} id 设备ID
+ * @param {Object} newStates 更新的数据
+ * @example
+ *  newStates示例
+ *  {
+ *    "deviceID": "1059893029",
+ *    "newStates":{
+ *      "controlState": "1",
+ *      "coldState": "1"
+ *    }
+ *  }
  */
-async function updateStateData(id, newStates) {
+async function updateImageStateByID(id, newStates) {
   try {
     const res = await axios.put(
       `${DOMAIN}/mqtt/v1/devices/${id}/image/properties`,
       {
-        data: {
-          newStates,
+        state: {
+          desired: newStates,
         },
       },
       {
@@ -116,12 +126,29 @@ async function updateStateData(id, newStates) {
         },
       }
     );
-  } catch (error) {}
+    const { code, code_no, data } = res.data;
+    if (code_no === "000000") {
+      return {
+        code: 0,
+        data: data.state.desired,
+      };
+    } else {
+      return {
+        code: 1,
+        data: code,
+      };
+    }
+  } catch (error) {
+    return {
+      code: 1,
+      data: error,
+    };
+  }
 }
 
 module.exports = {
   getDeviceByName,
   getDataStreamByID,
   getImageStateByID,
-  updateStateData,
+  updateImageStateByID,
 };

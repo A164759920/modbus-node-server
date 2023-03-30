@@ -2,7 +2,7 @@ const {
   getDeviceByName,
   getDataStreamByID,
   getImageStateByID,
-  updateStateData,
+  updateImageStateByID,
 } = require("../API/index");
 
 async function getDeviceController(ctx) {
@@ -53,7 +53,7 @@ async function getImageStateController(ctx) {
 async function updateImageStateController(ctx) {
   const { deviceID, newStates } = ctx.request.body;
   try {
-    const res = await updateStateData(deviceID, newStates);
+    const res = await updateImageStateByID(deviceID, newStates);
     if (res) {
       ctx.body = res;
     }
@@ -68,4 +68,5 @@ module.exports = {
   getDeviceController,
   getDataStreamController,
   getImageStateController,
+  updateImageStateController,
 };
