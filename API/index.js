@@ -1,12 +1,20 @@
 const axios = require("axios");
 const DOMAIN = "http://api.heclouds.com";
 const accessToken =
-  "version=2018-10-31&res=products%2F583419&et=1685360975&method=md5&sign=530vEjl56zCFt0GV8m7jxA%3D%3D";
+  "version=2018-10-31&res=products%2F583419&et=1680594001&method=md5&sign=fdSIAKXJakBX30adrnBt3w%3D%3D";
 
 /**
  * @description 根据设备名称获取设备信息
  * @param {String} deviceName 设备名称
- * @returns {Object}
+ * @example
+ * 返回值示例
+ *  code:0,
+ *  data:{
+ *    device_id:"xxx",
+ *    name:"xxx",
+ *    pid:"xxx",
+ *    key:"xxx"
+ *  }
  */
 async function getDeviceByName(deviceName) {
   try {
@@ -15,14 +23,21 @@ async function getDeviceByName(deviceName) {
         Authorization: accessToken,
       },
     });
-    console.log("返回值", res.data.data);
-    return {
-      code: 0,
-      data: res.data.data,
-    };
+    const { code_no, code } = res.data;
+    if (code_no === "000000") {
+      return {
+        code: 0,
+        data: res.data.data,
+      };
+    } else {
+      return {
+        code: 1,
+        data: code,
+      };
+    }
   } catch (error) {
     return {
-      code: 1,
+      code: 2,
       data: error,
     };
   }
@@ -30,6 +45,15 @@ async function getDeviceByName(deviceName) {
 /**
  * @description  获取传感器数据流
  * @param {String} id 设备ID
+ * @example
+ *  返回值示例
+ * code:0,
+ * data: {
+ *    "temperature":"23",
+ *    "foam":"23",
+ *    "oxygen":"15",
+ *    "pH":"7"
+ *  }
  */
 async function getDataStreamByID(id) {
   try {
@@ -51,17 +75,20 @@ async function getDataStreamByID(id) {
         tempMap[item.id] = item.datapoints[0].value;
       });
       return {
-        code: errno,
+        code: 0,
         data: tempMap,
       };
     } else {
       return {
-        code: errno,
+        code: 1,
         data: res.data.error,
       };
     }
   } catch (error) {
-    console.log("接口错误", res.data);
+    return {
+      code: 2,
+      data: error,
+    };
   }
 }
 /**
@@ -91,7 +118,7 @@ async function getImageStateByID(id) {
     }
   } catch (error) {
     return {
-      code: 1,
+      code: 2,
       data: error,
     };
   }
@@ -140,7 +167,7 @@ async function updateImageStateByID(id, newStates) {
     }
   } catch (error) {
     return {
-      code: 1,
+      code: 2,
       data: error,
     };
   }
