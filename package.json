@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "homepage": "https://github.io/",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "docs": "jsdoc -c ./jsdoc.json",
+    "deploy": "gh-pages -d build"
   },
   "author": "",
   "license": "ISC",
@@ -20,5 +23,8 @@
     "mqtt": "^4.3.7",
     "nodemon": "^2.0.21",
     "serialport": "^10.5.0"
+  },
+  "devDependencies": {
+    "docdash": "^2.0.1"
   }
 }

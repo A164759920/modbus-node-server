@@ -1,0 +1,30 @@
+name: API-DOCS CI/CD
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  serverless-devs-cd:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: npm install
+        run: npm install
+      - name: Build docs
+        run: npm run docs
+      - name: Deploy docs
+        uses: peaceiris/actions-gh-pages@v3
+         with:
+          github_token: ${{ secrets.ACCESS_TOKEN }}
+          publish_dir: ./docs

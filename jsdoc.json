@@ -1,0 +1,19 @@
+{
+  "source": {
+    "include": ["README.md", "./API/index.js"]
+  },
+  "templates": {
+    "default": {
+      "includeDate": false
+    }
+  },
+  "opts": {
+    "template": "node_modules/docdash",
+    "destination": "./docs",
+    "recurse": false,
+    "verbose": false
+  },
+  "meta": {
+    "title": "开发文档 v1.0"
+  }
+}

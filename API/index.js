@@ -94,6 +94,17 @@ async function getDataStreamByID(id) {
 /**
  * @description 根据ID获取设备镜像state 【reported字段】
  * @param {String} id 设备ID
+ * @example
+ * 返回值示例
+ *  "code": 0,
+    "data": {
+        "baseState": "0",
+        "hotState": "0",
+        "whiskState": "0",
+        "acidState": "0",
+        "coldState": "0",
+        "controlState": "0"
+    }
  */
 async function getImageStateByID(id) {
   try {
@@ -103,7 +114,6 @@ async function getImageStateByID(id) {
       },
     });
     const { code_no, code } = res.data;
-    console.log(res.data);
     if (code_no === "000000") {
       const { reported, desired } = res.data.data.properties.state;
       return {
