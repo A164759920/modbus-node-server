@@ -1,0 +1,8 @@
+{
+  "name": "apidoc测试文档",
+  "title": "apidoc测试文档",
+  "description": "API文档说明",
+  "template": {
+    "showRequiredLabels": true
+  }
+}

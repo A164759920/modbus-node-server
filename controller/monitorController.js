@@ -5,6 +5,30 @@ const {
   updateImageStateByID,
 } = require("../API/index");
 
+/**
+ * @api {get} /mqtt/getDevice/:deviceName 获取设备信息
+ * @apiName 获取设备信息
+ * @apiGroup device
+ *
+ * @apiParam {String} deviceName 设备名称
+ * @apiParamExample {json} Request-Example:
+ * {
+ *  "deviceName":"mqtt-can1"
+ * }
+ *
+ * @apiSuccess {Number} code 0
+ * @apiSuccess {Object} data 设备信息
+ * @apiSuccessExample {json} Response-Example:
+ * {
+ *  code:0,
+ *  data:{
+ *    device_id:"xxx",
+ *    name:"xxx",
+ *    pid:"xxx",
+ *    key:"xxx"
+ *  }
+ * }
+ */
 async function getDeviceController(ctx) {
   const { deviceName } = ctx.query;
   try {
@@ -19,7 +43,10 @@ async function getDeviceController(ctx) {
     };
   }
 }
-
+/**
+ *
+ *
+ */
 async function getDataStreamController(ctx) {
   const { deviceID } = ctx.query;
   try {
