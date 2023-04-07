@@ -19,12 +19,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Install jsdoc
-        run: npm install jsdoc -g
-      - name: Install jsdoc-theme
-        run: npm install docdash
+      - name: Install apidoc
+        run: npm install apidoc -g
       - name: Build docs
-        run: npm run docs
+        run: npm run api
       - name: Deploy docs
         uses: peaceiris/actions-gh-pages@v3
         with:

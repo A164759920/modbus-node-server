@@ -6,6 +6,7 @@ const accessToken =
 /**
  * @description 根据设备名称获取设备信息
  * @param {String} deviceName 设备名称
+ * @returns {object} data 查询数据
  * @example
  * 返回值示例
  *  code:0,

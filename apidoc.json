@@ -1,7 +1,6 @@
 {
-  "name": "apidoc测试文档",
-  "title": "apidoc测试文档",
-  "description": "API文档说明",
+  "name": "发酵罐远程控制器API文档",
+  "title": "API文档",
   "template": {
     "showRequiredLabels": true
   }
